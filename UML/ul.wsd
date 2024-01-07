@@ -1,0 +1,47 @@
+@startuml
+
+title bank system
+participant  client
+participant  server 
+participant database 
+
+alt  login as admin 
+    client -> server : Login_as_admin()
+    server -> database : Check_existans()
+    
+    loop
+    alt if exeist 
+        database -> server : admin exists 
+        server -> client : start()
+        
+    else 
+        database-> server : admin dosen't exist
+        server-> client : tryagain()
+    end
+    end
+    client -> server : sendrequest()
+    server -> database : fetchrequest()
+    database -> server : returndata()
+    server -> client : response()
+
+
+
+else login as user
+    client -> server : Login_as_user()
+    server -> database : Check_existans()
+    
+    loop
+    alt if exeist 
+        database -> server : user exists 
+        server -> client : start()
+        
+    else 
+        database-> server : user dosen't exist
+        server-> client : tryagain()
+    end
+    end
+    client -> server : sendrequest()
+    server -> database : fetchrequest()
+    database -> server : returndata()
+    server -> client : response()
+end
